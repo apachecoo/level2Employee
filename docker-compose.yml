@@ -2,19 +2,42 @@ version: '3'
 
 services:
   server:
-    container_name: level1_employees_server
+    container_name: level2_employees_server
     image: nginx:alpine
     restart: unless-stopped
     ports:
-      - 81:80
+      - "127.0.0.16:80:80"
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - level2_network
+
+  mariadb:
+    container_name: level2_employees_mariadb
+    image: mariadb:10.5
+    environment:
+      MYSQL_DATABASE: level2_employees_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: "12345"
+      MYSQL_ROOT_PASSWORD: "root"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    ports:
+      - "127.0.0.16:33066:3306"
+    networks:
+      - level2_network
+
   app:
-    container_name: level1_employees_app
+    container_name: level2_employees_app
     build: .
     restart: unless-stopped
     volumes:
       - ./:/var/www
+    networks:
+      - level2_network
+
+networks:
+  level2_network:
 volumes:
-  dbdata:
+  mariadb_data:
