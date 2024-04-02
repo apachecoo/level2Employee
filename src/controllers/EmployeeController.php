@@ -1,4 +1,5 @@
 <?php
+
 class EmployeeController
 {
     /**
@@ -7,17 +8,18 @@ class EmployeeController
     public function index(): void
     {
         $employees = EmployeeModel::getAll();
-        require_once('../views/employee/index.php');
+        require_once('./views/employee/index.php');
     }
 
     /**
      * @param int $id
      * @return void
      */
-    public function show(int $id): void
+    public function show(): void
     {
+        $id = $_REQUEST['id'];
         $employee = EmployeeModel::find($id);
-        require_once('../views/employee/show.php');
+        require_once('./views/employee/show.php');
     }
 }
 

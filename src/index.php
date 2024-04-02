@@ -1,7 +1,7 @@
 <?php
 
 
-$host = 'mariadb'; // Nombre del servicio en el archivo docker-compose.yml
+/*$host = 'mariadb'; // Nombre del servicio en el archivo docker-compose.yml
 $port = '3306'; // Puerto mapeado en el archivo docker-compose.yml
 $dbname = 'level2_employees_db';
 $username = 'user';
@@ -32,7 +32,7 @@ try {
 } catch(PDOException $e) {
     echo "Error de conexión: " . $e->getMessage()." detalle: ".$e->getTraceAsString();
 }
-exit();
+exit();*/
 
 require_once('models/EmployeeModel.php');
 require_once('controllers/EmployeeController.php');

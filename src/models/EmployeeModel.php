@@ -2,26 +2,30 @@
 
 class EmployeeModel
 {
-    protected $pdo;
+    protected static $pdo;
 
     public function __construct()
     {
-//        $this->pdo = new PDO('mysql:host=127.0.0.16;port=33066;dbname=level2_employees_db', 'user', '12345');
+    }
+
+    public static function initialize()
+    {
+        self::$pdo = new PDO('mysql:host=mariadb;port=3306;dbname=level2_employees_db', 'user', '12345');
+        self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public static function getAll()
     {
-        $pdo = new PDO('mysql:host=level2_employees_mariadb;port=36066;dbname=level2_employees_db', 'user', '12345');
-        $stmt = $pdo->query('SELECT * FROM employees');
+        self::initialize();
+        $stmt = self::$pdo->query('SELECT * FROM employees');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function find(int $id)
     {
-        $pdo = new PDO('mysql:host=localhost;dbname=level2_employees', 'user', '12345');
-        $stmt = $pdo->prepare('SELECT * FROM users WHERE id = :id');
+        self::initialize();
+        $stmt = self::$pdo->prepare('SELECT * FROM employees WHERE id = :id');
         $stmt->execute(array(':id' => $id));
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
-
