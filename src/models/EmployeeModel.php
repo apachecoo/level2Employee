@@ -10,7 +10,7 @@ class EmployeeModel
 
     public static function initialize()
     {
-        self::$pdo = new PDO('mysql:host=mariadb;port=3306;dbname=level2_employees_db', 'user', '12345');
+        self::$pdo = new PDO('mysql:host=mariadb;port=3306;dbname=level2_employees', 'user', '12345');
         self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 

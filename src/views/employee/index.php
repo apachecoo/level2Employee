@@ -9,7 +9,7 @@
 <h1>Listado de Empleados</h1>
 <ul>
     <?php foreach ($employees as $employee): ?>
-        <li><a href="?controller=EmployeeController&action=show&id=<?= $employee['id'] ?>"><?= $employee['name'] ?></a></li>
+        <li><a href="?controller=EmployeeController&action=show&id=<?= $employee['id'] ?>"><?= $employee['dni'].'-'.$employee['name'].' '.$employee['lastName'] ?></a></li>
     <?php endforeach; ?>
 </ul>
 </body>
