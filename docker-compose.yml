@@ -11,28 +11,15 @@ services:
       - "./mariadb/data:/var/lib/mysql"
       - "./mariadb/logs:/var/log/mysql"
       - "./mariadb/conf:/etc/mysql"
+      - "./src/database:/docker-entrypoint-initdb.d"
     environment:
-      MARIADB_ROOT_PASSWORD: "root"
-      MARIADB_DATABASE: "level2_employees_db"
-      MARIADB_USER: "user"
-      MARIADB_PASSWORD: "12345"
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_DATABASE=level2_employees
+      - MARIADB_USER=user
+      - MARIADB_PASSWORD=12345
     ports:
-      - "3306:3306"
-  #
-  #
-  #    environment:
-  #      MYSQL_DATABASE: level2_employees_db
-  #      MYSQL_USER: user
-  #      MYSQL_PASSWORD: "12345"
-  #      MYSQL_ROOT_PASSWORD: "root"
-  #      MYSQL_ROOT_HOST: "%"
-  #    volumes:
-  #      - mariadb_data:/var/lib/mysql
-  #      - ./custom.cnf:/etc/mysql/conf.d/custom.cnf
-  ##      - ./mysqld.sock:/var/run/mysqld/mysqld.sock
-  #    ports:
-  #      - "3306:3306"
-  ##    entrypoint: ./pre-stop.sh
+      - "127.0.0.16:3306:3306"
+    command: --init-file /docker-entrypoint-initdb.d/database.sql
   server:
     container_name: level2_employees_server
     image: nginx:alpine
@@ -44,6 +31,7 @@ services:
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
+
   app:
     container_name: level2_employees_app
     build: .

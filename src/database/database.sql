@@ -15,3 +15,8 @@ CREATE TABLE IF NOT EXISTS `employees`
   DEFAULT CHARSET = utf8mb4;
 
 insert into employees(dni, name, lastName, email) values (11102053366,'Leonor','Cardona Hernandez','leonor39393@gmail.com');
+
+
+GRANT ALL PRIVILEGES ON level2_employees.* TO 'user'@'%';
+
+FLUSH PRIVILEGES;
