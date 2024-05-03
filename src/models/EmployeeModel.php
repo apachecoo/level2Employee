@@ -4,10 +4,6 @@ class EmployeeModel
 {
     protected static $pdo;
 
-    public function __construct()
-    {
-    }
-
     public static function initialize()
     {
         self::$pdo = new PDO('mysql:host=mariadb;port=3306;dbname=level2_employees', 'user', '12345');

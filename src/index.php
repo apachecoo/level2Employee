@@ -2,7 +2,6 @@
 
 require_once('models/EmployeeModel.php');
 require_once('controllers/EmployeeController.php');
-
 if (isset($_GET['controller']) && isset($_GET['action'])) {
     $controller = $_GET['controller'];
     $action = $_GET['action'];
@@ -10,9 +9,7 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
     $controller = 'EmployeeController';
     $action = 'index';
 }
-
 require_once('controllers/' . $controller . '.php');
-
 $controller = new $controller();
 $controller->{$action}();
 

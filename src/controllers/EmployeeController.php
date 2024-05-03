@@ -21,5 +21,15 @@ class EmployeeController
         $employee = EmployeeModel::find($id);
         require_once('./views/employee/show.php');
     }
+
+    public function delete()
+    {
+        //Your code
+    }
+
+    public function edit()
+    {
+        //Your code
+    }
 }
 

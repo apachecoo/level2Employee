@@ -25,11 +25,14 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install gd
 
 # Copiamos todos los archivos de la carpeta actual de nuestra
-# computadora (los archivos de laravel) a /var/www/
+# computadora (los archivos del proyecto) a /var/www/
 COPY . /var/www/
 
 # Exponemos el puerto 9000 a la network
 EXPOSE 9000
+
+# Configuramos PHP para mostrar errores
+RUN sed -i 's/display_errors = Off/display_errors = On/' /usr/local/etc/php/php.ini
 
 # Corremos el comando php-fpm para ejecutar PHP
 CMD ["php-fpm"]
