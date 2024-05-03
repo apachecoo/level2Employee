@@ -2,13 +2,20 @@
 
 class EmployeeController
 {
+    private EmployeeView $view;
+
+    public function __construct()
+    {
+        $this->view = new EmployeeView;
+    }
+
     /**
      * @return void
      */
     public function index(): void
     {
         $employees = EmployeeModel::getAll();
-        require_once('./views/employee/index.php');
+        $this->view->index($employees);
     }
 
     /**
@@ -19,7 +26,7 @@ class EmployeeController
     {
         $id = $_REQUEST['id'];
         $employee = EmployeeModel::find($id);
-        require_once('./views/employee/show.php');
+        $this->view->show($employee);
     }
 
     public function delete()
