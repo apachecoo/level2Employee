@@ -9,19 +9,12 @@ class EmployeeController
         $this->view = new EmployeeView;
     }
 
-    /**
-     * @return void
-     */
     public function index(): void
     {
         $employees = EmployeeModel::getAll();
         $this->view->index($employees);
     }
 
-    /**
-     * @param int $id
-     * @return void
-     */
     public function show(): void
     {
         $id = $_REQUEST['id'];
@@ -29,12 +22,12 @@ class EmployeeController
         $this->view->show($employee);
     }
 
-    public function delete()
+    public function delete(): void
     {
         //Your code
     }
 
-    public function edit()
+    public function edit(): void
     {
         //Your code
     }
