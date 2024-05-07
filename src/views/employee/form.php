@@ -1,6 +1,8 @@
 <?php
 $action = !$employee ? '?controller=EmployeeController&action=store'
     : '?controller=EmployeeController&action=update&id=' . $employee->id;
+$labelButton= !$employee ? 'Adicionar':'Actualizar';
+$colorButton= !$employee ? 'btn-success':'btn-primary';
 ?>
 
 <form class="row g-3" action="<?= $action ?>" method="post">
@@ -70,6 +72,6 @@ $action = !$employee ? '?controller=EmployeeController&action=store'
 
 
     <div class="col-12">
-        <button class="btn btn-primary" type="submit">Actualizar</button>
+        <button class="btn <?= $colorButton ?>" type="submit"><?= $labelButton ?></button>
     </div>
 </form>
