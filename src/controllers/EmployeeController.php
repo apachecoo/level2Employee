@@ -12,6 +12,10 @@ class EmployeeController
     public function index(): void
     {
         $employees = EmployeeModel::getAll();
+        echo "<pre>";
+        print_r($employees);
+        echo "</pre>";
+
         $this->view->index($employees);
     }
 

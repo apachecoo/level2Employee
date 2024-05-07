@@ -13,7 +13,7 @@
     <h1>Listado de Empleados</h1>
     <div class="row">
         <div class="col">
-            <button type="button" class="btn btn-success ml-auto">Adicionar</button>
+            <a href="?controller=EmployeeController&action=show" class="btn btn-success ml-auto">Adicionar</a>
         </div>
     </div>
     <hr>
@@ -31,11 +31,11 @@
         if (!empty($employees)) {
             foreach ($employees as $employee): ?>
                 <tr>
-                    <th scope="row"><?= $employee['dni'] ?></th>
-                    <td><?= $employee['name'] ?></td>
-                    <td><?= $employee['lastName'] ?></td>
+                    <th scope="row"><?= $employee->dni ?></th>
+                    <td><?= $employee->name ?></td>
+                    <td><?= $employee->lastName ?></td>
                     <td>
-                        <button type="button" class="btn btn-primary">Actualizar</button>
+                        <a href="?controller=EmployeeController&action=show&id=<?= $employee->id ?>" type="button" class="btn btn-primary">Actualizar</a>
                         <button type="button" class="btn btn-danger">Eliminar</button>
                     </td>
                 </tr>
