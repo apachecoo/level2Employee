@@ -23,6 +23,7 @@
             <th scope="col">Cédula</th>
             <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
+            <th scope="col">Fecha ingreso</th>
             <th scope="col">Acciones</th>
         </tr>
         </thead>
@@ -34,9 +35,12 @@
                     <th scope="row"><?= $employee->dni ?></th>
                     <td><?= $employee->name ?></td>
                     <td><?= $employee->lastName ?></td>
+                    <td><?= $employee->birthdate ?></td>
                     <td>
-                        <a href="?controller=EmployeeController&action=show&id=<?= $employee->id ?>" type="button" class="btn btn-primary">Actualizar</a>
-                        <button type="button" class="btn btn-danger">Eliminar</button>
+                        <a href="?controller=EmployeeController&action=show&id=<?= $employee->id ?>" type="button"
+                           class="btn btn-primary">Actualizar</a>
+                        <a href="?controller=EmployeeController&action=delete&id=<?= $employee->id ?>" type="button"
+                           class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach;

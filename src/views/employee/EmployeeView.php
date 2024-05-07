@@ -9,7 +9,7 @@ class EmployeeView
         require_once('./views/employee/index.php');
     }
 
-    public function show(?EmployeeModel $employee): void
+    public function show(?EmployeeModel $employee = null): void
     {
         require_once('./views/employee/show.php');
     }

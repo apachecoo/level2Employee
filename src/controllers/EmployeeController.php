@@ -12,17 +12,13 @@ class EmployeeController
     public function index(): void
     {
         $employees = EmployeeModel::getAll();
-        echo "<pre>";
-        print_r($employees);
-        echo "</pre>";
-
         $this->view->index($employees);
     }
 
     public function show(): void
     {
-        $id = $_REQUEST['id'];
-        $employee = EmployeeModel::find($id);
+        $id = $_REQUEST['id'] ?? null;
+        $employee = $id ? EmployeeModel::find($id) : null;
         $this->view->show($employee);
     }
 
@@ -31,7 +27,12 @@ class EmployeeController
         //Your code
     }
 
-    public function edit(): void
+    public function update(): void
+    {
+        //Your code
+    }
+
+    public function store()
     {
         //Your code
     }

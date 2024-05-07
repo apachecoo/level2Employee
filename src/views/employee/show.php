@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container">
-    <h2 class="text-center mt-5 mb-4">Actualizar Empleado</h2>
+    <h2 class="text-center mt-5 mb-4"><?= $employee?'Actualizar':'Adicionar'?> Empleado</h2>
     <?php include_once('form.php'); ?>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
