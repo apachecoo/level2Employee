@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS `employees`
     birthdate date NOT NULL,
     joindate date NOT NULL,
     salary integer NOT NULL,
-    PRIMARY KEY (id,dni)
+    PRIMARY KEY (id),
+    UNIQUE(dni)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 

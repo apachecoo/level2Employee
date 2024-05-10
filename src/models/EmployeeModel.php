@@ -48,15 +48,17 @@ class EmployeeModel
 
     public function calculateAge(): ?int
     {
-        if ($this->birthdate === null) {
-            return null;
-        }
-        $dob = new DateTime($this->birthdate);
-        $now = new DateTime();
-        $age = $now->diff($dob);
-
-        return $age->y;
+        return 0;
     }
 
+    public function calculateSeniority(): ?int
+    {
+        return 0;
+    }
+
+    public function calculateBenefits(): ?int
+    {
+        return 0;
+    }
 
 }

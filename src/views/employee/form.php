@@ -1,8 +1,9 @@
+
 <?php
 $action = !$employee ? '?controller=EmployeeController&action=store'
     : '?controller=EmployeeController&action=update&id=' . $employee->id;
-$labelButton= !$employee ? 'Adicionar':'Actualizar';
-$colorButton= !$employee ? 'btn-success':'btn-primary';
+$labelButton = !$employee ? 'Adicionar' : 'Actualizar';
+$colorButton = !$employee ? 'btn-success' : 'btn-primary';
 ?>
 
 <form class="row g-3" action="<?= $action ?>" method="post">
@@ -36,8 +37,12 @@ $colorButton= !$employee ? 'btn-success':'btn-primary';
         <label for="name" class="form-label">Género</label>
         <select name="employee[gender]" id="gender" class="form-select">
             <option value="">Seleccione...</option>
-            <option value="M" <?= $employee ? $employee->gender === 'M' ? 'selected' : '' : ''; ?> >Masculino</option>
-            <option value="F" <?= $employee ? $employee->gender === 'F' ? 'selected' : '' : ''; ?> >Femenino</option>
+            <option value="M" <?= $employee ? $employee->gender === 'M' ? 'selected' : '' : ''; ?> >
+                Masculino
+            </option>
+            <option value="F" <?= $employee ? $employee->gender === 'F' ? 'selected' : '' : ''; ?> >
+                Femenino
+            </option>
         </select>
         <div class="valid-feedback">
             Looks good!
@@ -54,22 +59,11 @@ $colorButton= !$employee ? 'btn-success':'btn-primary';
                value="<?= $employee ? $employee->joindate : '' ?>" required>
     </div>
     <div class="col-md-3">
-        <label for="lastName" class="form-label">Salario básico</label>
-        <input type="text" class="form-control" id="lastName" name="employee[salary]"
+        <label for="salary" class="form-label">Salario básico</label>
+        <input type="text" class="form-control" id="salary" name="employee[salary]"
                value="<?= $employee ? $employee->salary : '' ?>" required>
-        <div class="valid-feedback">
-            Looks good!
-        </div>
     </div>
-    <div class="col-md-3">
-        <label for="lastName" class="form-label">Edad</label>
-        <input type="text" class="form-control" id="lastName" name="employee[salary]"
-               value="<?= $employee ? $employee->calculateAge() : '' ?>" required>
-        <div class="valid-feedback">
-            Looks good!
-        </div>
-    </div>
-
+    <hr>
 
     <div class="col-12">
         <button class="btn <?= $colorButton ?>" type="submit"><?= $labelButton ?></button>
