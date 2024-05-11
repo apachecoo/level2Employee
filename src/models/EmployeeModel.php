@@ -3,7 +3,6 @@
 class EmployeeModel
 {
     protected static string $table = 'employees';
-    protected static PDO $pdo;
 
     public int $id;
     public string $dni;
@@ -12,28 +11,24 @@ class EmployeeModel
     public string $gender;
     public string $birthdate;
     public string $joindate;
-    public int $salary;
+    public float $salary;
 
-
-    public static function initialize(): void
+    public static function getConnection(): PDO
     {
-        self::$pdo = new PDO('mysql:host=mariadb;port=3306;dbname=level2_employees', 'user', '12345');
-        self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return DatabaseConnection::getConnection();
     }
 
     public static function getAll(): array
     {
-        self::initialize();
-        $stmt = self::$pdo->query('SELECT * FROM ' . self::$table);
+        $stmt = self::getConnection()->query('SELECT * FROM ' . self::$table);
         return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'EmployeeModel');
     }
 
 
     public static function find(int $id): EmployeeModel|bool|null
     {
-        self::initialize();
         try {
-            $stmt = self::$pdo->prepare('SELECT * FROM ' . self::$table . ' WHERE id = :id');
+            $stmt = self::getConnection()->prepare('SELECT * FROM ' . self::$table . ' WHERE id = :id');
             $stmt->execute(array(':id' => $id));
             if ($stmt->rowCount() === 0) {
                 return null;
@@ -64,8 +59,8 @@ class EmployeeModel
     public function calculateSeniority(): ?int
     {
         $currentDate = new DateTime();
-        $joinDate = new DateTime($this->joindate);
-        $antiquity = $currentDate->diff($joinDate);
+        $joindate = new DateTime($this->joindate);
+        $antiquity = $currentDate->diff($joindate);
         return $antiquity->y;
     }
 
@@ -80,9 +75,8 @@ class EmployeeModel
 
     public function save(): bool
     {
-        self::initialize();
         try {
-            $stmt = self::$pdo->prepare('INSERT INTO ' . self::$table
+            $stmt = self::getConnection()->prepare('INSERT INTO ' . self::$table
                 . ' (dni, name, lastName, gender, birthdate, joindate, salary)' .
                 ' VALUES (:dni, :name, :lastName, :gender, :birthdate, :joindate, :salary)');
             $stmt->execute([
@@ -103,9 +97,17 @@ class EmployeeModel
 
     public function update(int $id): bool
     {
-        self::initialize();
         try {
-            $stmt = self::$pdo->prepare('UPDATE ' . self::$table . ' SET name = :name, lastName = :lastName, gender = :gender, birthdate = :birthdate, joindate = :joindate, salary = :salary WHERE id = :id');
+            $stmt = self::getConnection()
+                ->prepare('UPDATE ' . self::$table
+                    . ' SET
+                    name = :name,
+                    lastName = :lastName,
+                    gender = :gender,
+                    birthdate = :birthdate,
+                    joindate = :joindate,
+                    salary = :salary
+                    WHERE id = :id');
             $stmt->execute(array(
                 ':name' => $this->name,
                 ':lastName' => $this->lastName,
@@ -124,9 +126,8 @@ class EmployeeModel
 
     public function delete(int $id): bool
     {
-        self::initialize();
         try {
-            $stmt = self::$pdo->prepare('DELETE FROM ' . self::$table . ' WHERE id=:id');
+            $stmt = self::getConnection()->prepare('DELETE FROM ' . self::$table . ' WHERE id=:id');
             $stmt->execute([
                 ':id' => $id
             ]);
@@ -136,5 +137,4 @@ class EmployeeModel
             return false;
         }
     }
-
 }

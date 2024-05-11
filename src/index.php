@@ -1,5 +1,6 @@
 <?php
 
+require_once 'database/DatabaseConnection.php';
 require_once 'models/EmployeeModel.php';
 require_once 'controllers/EmployeeController.php';
 require_once 'views/employee/EmployeeView.php';
