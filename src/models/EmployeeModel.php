@@ -5,14 +5,14 @@ class EmployeeModel
     protected static string $table = 'employees';
     protected static PDO $pdo;
 
-    public $id;
-    public $dni;
-    public $name;
-    public $lastName;
-    public $gender;
-    public $birthdate;
-    public $joindate;
-    public $salary;
+    public int $id;
+    public string $dni;
+    public string $name;
+    public string $lastName;
+    public string $gender;
+    public string $birthdate;
+    public string $joindate;
+    public int $salary;
 
 
     public static function initialize(): void
@@ -46,19 +46,95 @@ class EmployeeModel
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function calculateAge(): ?int
     {
-        return 0;
+        $currentDate = new DateTime();
+        $birthDate = new DateTime($this->birthdate);
+        $age = $currentDate->diff($birthDate);
+
+        return $age->y;
     }
 
+    /**
+     * @throws Exception
+     */
     public function calculateSeniority(): ?int
     {
-        return 0;
+        $currentDate = new DateTime();
+        $joinDate = new DateTime($this->joindate);
+        $antiquity = $currentDate->diff($joinDate);
+        return $antiquity->y;
     }
 
-    public function calculateBenefits(): ?int
+    /**
+     * @throws Exception
+     */
+    public function calculateBenefits(): ? float
     {
-        return 0;
+        $antiquity = $this->calculateSeniority();
+        return $antiquity * (1 / 12) * $this->salary;
+    }
+
+    public function save(): bool
+    {
+        self::initialize();
+        try {
+            $stmt = self::$pdo->prepare('INSERT INTO ' . self::$table
+                . ' (dni, name, lastName, gender, birthdate, joindate, salary)' .
+                ' VALUES (:dni, :name, :lastName, :gender, :birthdate, :joindate, :salary)');
+            $stmt->execute([
+                ':dni' => $this->dni,
+                ':name' => $this->name,
+                ':lastName' => $this->lastName,
+                ':gender' => $this->gender,
+                ':birthdate' => $this->birthdate,
+                ':joindate' => $this->joindate,
+                ':salary' => $this->salary
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            echo "Error al guardar el registro" . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function update(int $id): bool
+    {
+        self::initialize();
+        try {
+            $stmt = self::$pdo->prepare('UPDATE ' . self::$table . ' SET name = :name, lastName = :lastName, gender = :gender, birthdate = :birthdate, joindate = :joindate, salary = :salary WHERE id = :id');
+            $stmt->execute(array(
+                ':name' => $this->name,
+                ':lastName' => $this->lastName,
+                ':gender' => $this->gender,
+                ':birthdate' => $this->birthdate,
+                ':joindate' => $this->joindate,
+                ':salary' => $this->salary,
+                ':id' => $id
+            ));
+            return true;
+        } catch (PDOException $e) {
+            echo "Error al actualizar el empleado: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function delete(int $id): bool
+    {
+        self::initialize();
+        try {
+            $stmt = self::$pdo->prepare('DELETE FROM ' . self::$table . ' WHERE id=:id');
+            $stmt->execute([
+                ':id' => $id
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            echo 'Error al eliminar registro' . $e->getMessage();
+            return false;
+        }
     }
 
 }
