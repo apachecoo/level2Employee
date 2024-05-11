@@ -72,7 +72,7 @@ class EmployeeModel
     /**
      * @throws Exception
      */
-    public function calculateBenefits(): ? float
+    public function calculateBenefits(): ?float
     {
         $antiquity = $this->calculateSeniority();
         return $antiquity * (1 / 12) * $this->salary;
