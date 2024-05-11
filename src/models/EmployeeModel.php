@@ -24,7 +24,6 @@ class EmployeeModel
         return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'EmployeeModel');
     }
 
-
     public static function find(int $id): EmployeeModel|bool|null
     {
         try {
