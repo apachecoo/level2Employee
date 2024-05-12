@@ -5,9 +5,13 @@ class EmployeeController extends AbstractController
 
     public function __construct()
     {
-        parent::__construct();
+        $this->view = new EmployeeView;
     }
 
+    private function getEmployeeModel(): ?EmployeeModel
+    {
+        return new EmployeeModel();
+    }
     public function index(): void
     {
         $employees = EmployeeModel::getAll();
@@ -23,9 +27,7 @@ class EmployeeController extends AbstractController
 
     public function delete(): void
     {
-        $id = $_REQUEST['id'] ?? null;
-        $employee = new EmployeeModel();
-        $employee->delete($id);
+        $this->getEmployeeModel()->delete($_REQUEST['id'] ?? null);
         header('Location: /');
     }
 
