@@ -1,7 +1,7 @@
 <?php
 
 
-class EmployeeView
+class EmployeeView extends AbstractView
 {
 
     public function index(array $employees): void
@@ -9,7 +9,7 @@ class EmployeeView
         require_once './views/employee/index.php';
     }
 
-    public function show(?EmployeeModel $employee = null): void
+    public function show(?AbstractModel $employee = null): void
     {
         require_once './views/employee/show.php';
     }

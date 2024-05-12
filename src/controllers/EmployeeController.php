@@ -1,12 +1,11 @@
 <?php
 
-class EmployeeController
+class EmployeeController extends AbstractController
 {
-    private EmployeeView $view;
 
     public function __construct()
     {
-        $this->view = new EmployeeView;
+        parent::__construct();
     }
 
     public function index(): void

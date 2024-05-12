@@ -3,6 +3,8 @@
 require_once 'database/DatabaseConnection.php';
 require_once 'interfaces/InterfazModel.php';
 require_once 'abstracts/AbstractModel.php';
+require_once 'abstracts/AbstractController.php';
+require_once 'abstracts/AbstractView.php';
 require_once 'traits/TraitTools.php';
 require_once 'models/EmployeeModel.php';
 require_once 'controllers/EmployeeController.php';
