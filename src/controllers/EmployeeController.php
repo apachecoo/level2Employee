@@ -12,6 +12,7 @@ class EmployeeController extends AbstractController
     {
         return new EmployeeModel();
     }
+
     public function index(): void
     {
         $employees = EmployeeModel::getAll();
@@ -43,12 +44,28 @@ class EmployeeController extends AbstractController
 
     public function store()
     {
+
         $employeeData = $_REQUEST['employee'] ?? null;
-        $employee = new EmployeeModel();
-        $employee->dni = $employeeData['dni'] ?? null;
-        $this->extracted($employeeData, $employee);
-        $employee->save();
-        header('Location: /');
+        $validations = [
+//            'dni' => 'required|exists:EmployeeModel',
+            'dni' => 'required',
+            'name' => 'required',
+            'lastName' => 'required',
+            'gender' => 'required',
+            'birthdate' => 'required',
+            'joindate' => 'required',
+            'salary' => 'required',
+        ];
+        $errors = Validator::validate($employeeData, $validations);
+        if ($errors) {
+            $this->view->show(null, $errors);
+        } else {
+            $employee = new EmployeeModel();
+            $employee->dni = $employeeData['dni'] ?? null;
+            $this->extracted($employeeData, $employee);
+            $employee->save();
+            header('Location: /');
+        }
     }
 
     /**

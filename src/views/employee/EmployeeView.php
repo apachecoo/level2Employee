@@ -9,7 +9,7 @@ class EmployeeView extends AbstractView
         require_once './views/employee/index.php';
     }
 
-    public function show(?AbstractModel $employee = null): void
+    public function show(?AbstractModel $employee = null, $errors=[]): void
     {
         require_once './views/employee/show.php';
     }

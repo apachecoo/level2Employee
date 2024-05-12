@@ -1,6 +1,7 @@
 <?php
 
 require_once 'database/DatabaseConnection.php';
+require_once 'validate/Validator.php';
 require_once 'interfaces/InterfazModel.php';
 require_once 'abstracts/AbstractModel.php';
 require_once 'abstracts/AbstractController.php';
