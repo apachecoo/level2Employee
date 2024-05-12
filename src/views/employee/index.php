@@ -18,6 +18,7 @@
     </div>
     <hr>
     <table class="table">
+        <caption>Listado de empleados</caption>
         <thead class="table-dark">
         <tr>
             <th scope="col">Cédula</th>
@@ -46,7 +47,7 @@
             <?php endforeach;
         } else { ?>
             <tr>
-                <td colspan="4">
+                <td colspan="5">
                     <div class="alert alert-warning text-center" role="alert">
                         No existen datos para mostrar.
                     </div>

@@ -1,9 +1,9 @@
 <?php
 
-class EmployeeModel
+class EmployeeModel extends AbstractModel implements InterfazModel
 {
+    use TraitTools;
     protected static string $table = 'employees';
-
     public int $id;
     public string $dni;
     public string $name;
@@ -12,33 +12,6 @@ class EmployeeModel
     public string $birthdate;
     public string $joindate;
     public float $salary;
-
-    public static function getConnection(): PDO
-    {
-        return DatabaseConnection::getConnection();
-    }
-
-    public static function getAll(): array
-    {
-        $stmt = self::getConnection()->query('SELECT * FROM ' . self::$table);
-        return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'EmployeeModel');
-    }
-
-    public static function find(int $id): EmployeeModel|bool|null
-    {
-        try {
-            $stmt = self::getConnection()->prepare('SELECT * FROM ' . self::$table . ' WHERE id = :id');
-            $stmt->execute(array(':id' => $id));
-            if ($stmt->rowCount() === 0) {
-                return null;
-            }
-            $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'EmployeeModel');
-            return $stmt->fetch() ?: null;
-        } catch (PDOException $e) {
-            echo "Error al ejecutar la consulta: " . $e->getMessage();
-            return false;
-        }
-    }
 
     /**
      * @throws Exception
@@ -64,12 +37,15 @@ class EmployeeModel
     }
 
     /**
+     * @return string
      * @throws Exception
      */
-    public function calculateBenefits(): ?float
+    public function calculateBenefits(): string
     {
         $antiquity = $this->calculateSeniority();
-        return $antiquity * (1 / 12) * $this->salary;
+        $benefits= $antiquity * (1 / 12) * $this->salary;
+
+        return $this->formatDecimal($benefits,2);
     }
 
     public function save(): bool
@@ -119,20 +95,6 @@ class EmployeeModel
             return true;
         } catch (PDOException $e) {
             echo "Error al actualizar el empleado: " . $e->getMessage();
-            return false;
-        }
-    }
-
-    public function delete(int $id): bool
-    {
-        try {
-            $stmt = self::getConnection()->prepare('DELETE FROM ' . self::$table . ' WHERE id=:id');
-            $stmt->execute([
-                ':id' => $id
-            ]);
-            return true;
-        } catch (PDOException $e) {
-            echo 'Error al eliminar registro' . $e->getMessage();
             return false;
         }
     }
