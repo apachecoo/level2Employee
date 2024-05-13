@@ -1,8 +1,8 @@
 <?php
-$action = !$employee ? '?controller=EmployeeController&action=store'
-    : '?controller=EmployeeController&action=update&id=' . $employee->id;
-$labelButton = !$employee ? 'Adicionar' : 'Actualizar';
-$colorButton = !$employee ? 'btn-success' : 'btn-primary';
+
+$action = !$employee ? '?controller=EmployeeController&action=store' : '?controller=EmployeeController&action=update&id=' . ($employee->id ?? '');
+$labelButton = $isAdd ? 'Adicionar' : 'Actualizar';
+$colorButton = $isAdd  ? 'btn-success' : 'btn-primary';
 ?>
 
 <form class="row g-3" action="<?= $action ?>" method="post">
@@ -51,6 +51,10 @@ $colorButton = !$employee ? 'btn-success' : 'btn-primary';
     </div>
     <hr>
     <?php
+
+//    echo "<pre>";
+//    print_r($errors);
+//    echo "</pre>";
     if ($errors) {
         ?>
         <div class="alert alert-danger d-flex align-items-right" role="alert">
@@ -58,11 +62,10 @@ $colorButton = !$employee ? 'btn-success' : 'btn-primary';
             <?php
             echo '<br><ul>';
             foreach ($errors ?? [] as $error) {
-                echo '<li>' . $error . '</li>';
+                echo  '<li>' . $error . '</li>';
             }
             echo '</ul>';
             ?>
-
         </div>
     <?php } ?>
     <div class="col-12">

@@ -1,3 +1,6 @@
+<?php
+$isAdd=!$employee || !isset($employee->id);
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,9 +12,9 @@
 </head>
 <body>
 <div class="container">
-    <h2 class="text-center mt-5 mb-4"><?= $employee ? 'Actualizar' : 'Adicionar' ?> Empleado</h2>
+    <h2 class="text-center mt-5 mb-4"><?= !$isAdd ? 'Actualizar' : 'Adicionar' ?> Empleado</h2>
     <div class="row">
-        <div class="col-lg-8 <?= !$employee ? 'col-lg-12' : 'col-lg-8' ?> ">
+        <div class="col-lg-8 <?= $isAdd ? 'col-lg-12' : 'col-lg-8' ?> ">
             <div class="card">
                 <div class="card-header">
                     Formulario actualización
@@ -22,7 +25,7 @@
             </div>
         </div>
         <div class="col-lg-4 col-md-4">
-            <?php $employee ? include_once 'calculatedFields.php' : ''; ?>
+            <?php !$isAdd ? include_once 'calculatedFields.php' : ''; ?>
         </div>
     </div>
 

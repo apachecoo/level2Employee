@@ -47,8 +47,7 @@ class EmployeeController extends AbstractController
 
         $employeeData = $_REQUEST['employee'] ?? null;
         $validations = [
-//            'dni' => 'required|exists:EmployeeModel',
-            'dni' => 'required',
+            'dni' => 'required|exists:EmployeeModel',
             'name' => 'required',
             'lastName' => 'required',
             'gender' => 'required',
@@ -56,13 +55,21 @@ class EmployeeController extends AbstractController
             'joindate' => 'required',
             'salary' => 'required',
         ];
-        $errors = Validator::validate($employeeData, $validations);
+        $customFields = [
+            'dni' => 'Documento',
+            'name' => 'Nombre',
+            'lastName' => 'Apellido',
+            'gender' => 'Género',
+            'birthdate' => 'Fecha de nacimiento',
+            'joindate' => 'Fecha de ingreso',
+            'salary' => 'Salario',
+        ];
+        $errors = Validator($employeeData, $validations, $customFields)::validate();
+        $employee = new EmployeeModel();
+        $this->extracted($employeeData, $employee);
         if ($errors) {
-            $this->view->show(null, $errors);
+            $this->view->show($employee, $errors);
         } else {
-            $employee = new EmployeeModel();
-            $employee->dni = $employeeData['dni'] ?? null;
-            $this->extracted($employeeData, $employee);
             $employee->save();
             header('Location: /');
         }
@@ -75,12 +82,13 @@ class EmployeeController extends AbstractController
      */
     public function extracted(mixed $employeeData, EmployeeModel $employee): void
     {
+        $employee->dni = $employeeData['dni'] ?? null;
         $employee->name = $employeeData['name'] ?? null;
         $employee->lastName = $employeeData['lastName'] ?? null;
         $employee->gender = $employeeData['gender'] ?? null;
         $employee->birthdate = $employeeData['birthdate'] ?? null;
         $employee->joindate = $employeeData['joindate'] ?? null;
-        $employee->salary = $employeeData['salary'] ?? null;
+        $employee->salary = $employeeData['salary'] ?? empty($employeeData['salary']) ? $employeeData['salary'] : 0.00;
     }
 }
 

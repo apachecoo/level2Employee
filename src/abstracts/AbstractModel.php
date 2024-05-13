@@ -2,7 +2,7 @@
 
 abstract class AbstractModel
 {
-    protected static string $table;
+    public static string $table;
 
     /**
      * @return array
@@ -17,7 +17,7 @@ abstract class AbstractModel
      * @param array $params
      * @return array|null
      */
-    protected static function query(string $sql, array $params = []): ?array
+    public static function query(string $sql, array $params = []): ?array
     {
         try {
             $className = get_called_class(); // Obtener el nombre de la clase hija

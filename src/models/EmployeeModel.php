@@ -3,7 +3,7 @@
 class EmployeeModel extends AbstractModel implements InterfazModel
 {
     use TraitTools;
-    protected static string $table = 'employees';
+    public static string $table = 'employees';
     public int $id;
     public string $dni;
     public string $name;
