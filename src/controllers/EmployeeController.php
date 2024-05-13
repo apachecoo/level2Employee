@@ -36,18 +36,35 @@ class EmployeeController extends AbstractController
     {
         $id = (int)$_REQUEST['id'];
         $employeeData = $_REQUEST['employee'] ?? null;
+        $errors = $this->validate($employeeData, true);
         $employee = new EmployeeModel();
         $this->extracted($employeeData, $employee);
-        $employee->update($id);
-        header('Location: /');
+        if ($errors) {
+            $this->view->show($employee, $errors);
+        } else {
+            $employee->update($id);
+            header('Location: /');
+        }
     }
 
     public function store()
     {
-
         $employeeData = $_REQUEST['employee'] ?? null;
+        $errors = $this->validate($employeeData);
+        $employee = new EmployeeModel();
+        $this->extracted($employeeData, $employee);
+        if ($errors) {
+            $this->view->show($employee, $errors);
+        } else {
+            $employee->save();
+            header('Location: /');
+        }
+    }
+
+
+    public function validate(array $data, bool $update = false): array
+    {
         $validations = [
-            'dni' => 'required|exists:EmployeeModel',
             'name' => 'required',
             'lastName' => 'required',
             'gender' => 'required',
@@ -55,6 +72,8 @@ class EmployeeController extends AbstractController
             'joindate' => 'required',
             'salary' => 'required',
         ];
+        $update ? $validations['dni'] = 'required'
+            : $validations['dni'] = 'required|exists:EmployeeModel';
         $customFields = [
             'dni' => 'Documento',
             'name' => 'Nombre',
@@ -64,15 +83,7 @@ class EmployeeController extends AbstractController
             'joindate' => 'Fecha de ingreso',
             'salary' => 'Salario',
         ];
-        $errors = Validator($employeeData, $validations, $customFields)::validate();
-        $employee = new EmployeeModel();
-        $this->extracted($employeeData, $employee);
-        if ($errors) {
-            $this->view->show($employee, $errors);
-        } else {
-            $employee->save();
-            header('Location: /');
-        }
+        return Validator::validate($data, $validations, $customFields);
     }
 
     /**

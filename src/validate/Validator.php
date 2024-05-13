@@ -2,27 +2,11 @@
 
 class Validator
 {
-    private array $data;
-    private array $validations;
-    private array $customFields;
 
-    /**
-     * @param array $this->>data
-     * @param array $validations
-     * @param array $customFields
-     */
-    public function __construct(array $this->data, array $validations, array $customFields)
-    {
-        $this->data = $data;
-        $this->validations = $validations;
-        $this->customFields = $customFields;
-    }
-
-
-    public static function validate(): array
+    public static function validate(array $data, array $validations, array $customFields): array
     {
         $errors = [];
-        foreach ($this->data as $key => $datum) {
+        foreach ($data as $key => $datum) {
             if (array_key_exists($key, $validations)) {
                 foreach ($validations as $validation) {
                     if (str_contains($validation, '|')) {
@@ -40,7 +24,7 @@ class Validator
                             }
                         }
                     } else {
-                        $message = (new self())->{$validation}($key, $datum);
+                        $message = (new self())->{$validation}($key, $datum, $customFields);
                         if ($message) {
                             $errors[$key] = $message;
                         }
@@ -54,10 +38,13 @@ class Validator
 
     private function required(string $field, mixed $value, array $customFields): string|null
     {
-        $message = 'El campo ' . $this->isCustomizable($field, $customFields) . ' es obligatorio.';
+        $message = 'El campo ' . $this->replaceFieldsCustomizable($field, $customFields) . ' es obligatorio.';
         return empty($value) ? $message : null;
     }
 
+    /**
+     * @throws ReflectionException
+     */
     private function exists(string $field, mixed $value, $model): string|null
     {
         if (class_exists($model)) {
@@ -76,8 +63,15 @@ class Validator
         return null;
     }
 
-    private function isCustomizable(string $field, array $customFields): bool
+    private function replaceFieldsCustomizable(string $field, array $customFields): string
     {
-        return in_array($field, $customFields);
+        $foundField = $field;
+        foreach ($customFields as $customField => $value) {
+            if ($customField === $field) {
+                $foundField = $value;
+            }
+        }
+
+        return $foundField;
     }
 }
