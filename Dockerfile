@@ -31,9 +31,6 @@ COPY . /var/www/
 # Exponemos el puerto 9000 a la network
 EXPOSE 9000
 
-# Configuramos PHP para mostrar errores
-RUN sed -i 's/display_errors = Off/display_errors = On/' /usr/local/etc/php/php.ini
-
 # Corremos el comando php-fpm para ejecutar PHP
 CMD ["php-fpm"]
 
