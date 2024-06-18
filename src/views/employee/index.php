@@ -3,62 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empleados</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Página Básica con Mini-Framework CSS</title>
+    <link rel="stylesheet" href="<?= getenv('BASE_URL').'/public/assets/css/main.css'?>">
 </head>
 <body>
-<div class="container">
-    <br>
-    <h1>Listado de Empleados</h1>
-    <div class="row">
-        <div class="col">
-            <a href="?controller=EmployeeController&action=show" class="btn btn-success ml-auto">Adicionar</a>
-        </div>
-    </div>
-    <hr>
-    <table class="table">
-        <caption>Listado de empleados</caption>
-        <thead class="table-dark">
-        <tr>
-            <th scope="col">Cédula</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Fecha ingreso</th>
-            <th scope="col">Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        if (!empty($employees)) {
-            foreach ($employees as $employee): ?>
-                <tr>
-                    <th scope="row"><?= $employee->dni ?></th>
-                    <td><?= $employee->name ?></td>
-                    <td><?= $employee->lastName ?></td>
-                    <td><?= $employee->birthdate ?></td>
-                    <td>
-                        <a href="?controller=EmployeeController&action=show&id=<?= $employee->id ?>" type="button"
-                           class="btn btn-primary">Actualizar</a>
-                        <a href="?controller=EmployeeController&action=delete&id=<?= $employee->id ?>" type="button"
-                           class="btn btn-danger">Eliminar</a>
-                    </td>
-                </tr>
-            <?php endforeach;
-        } else { ?>
-            <tr>
-                <td colspan="5">
-                    <div class="alert alert-warning text-center" role="alert">
-                        No existen datos para mostrar.
-                    </div>
-                </td>
-            </tr>
-        <?php } ?>
-        </tbody>
-    </table>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
+    <header>
+        <h1>Reto empleados</h1>
+    </header>
+    <main>
+        <section>
+            <div class="row">
+                <div class="col">
+                    <a href="?controller=EmployeeController&action=show" class="btn success">Adicionar</a>
+                </div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cédula</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Fecha de ingreso</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($employees)) {
+                        foreach ($employees as $employee): ?>
+                            <tr>
+                                <td><?= $employee->dni ?></td>
+                                <td><?= $employee->name ?></td>
+                                <td><?= $employee->lastName ?></td>
+                                <td><?= $employee->birthdate ?></td>
+                                <td>
+                                    <a href="?controller=EmployeeController&action=show&id=<?= $employee->id ?>" class="btn info">Actualizar</a>
+                                    <a href="?controller=EmployeeController&action=delete&id=<?= $employee->id ?>" class="btn danger">Eliminar</a>
+                                </td>
+                            </tr>
+                        <?php endforeach;
+                    } else { ?>
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-warning text-center" role="alert">
+                                    No existen datos para mostrar.
+                                </div>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Mi Página</p>
+    </footer>
 </body>
 </html>

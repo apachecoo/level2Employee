@@ -1,0 +1,239 @@
+/* Colores */
+:root {
+    --fondo: #EFEFEF;
+    --primario: #D9EAD3;
+    --secundario: #A9CCE3;
+    --texto: #333333;
+    --borde: #B2B2B2;
+    --enlace: #5DADE2;
+    --success: #28a745;
+    --warning: #ffc107;
+    --info: #17a2b8;
+    --danger: #dc3545;
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos del body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--fondo);
+    color: var(--texto);
+    padding: 20px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Cabecera */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: var(--enlace);
+}
+
+/* Contenedor principal */
+main {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 0 20px;
+    flex: 1;
+}
+
+/* Secciones */
+section {
+    margin-bottom: 40px;
+}
+
+/* Estilos del formulario */
+form {
+    background-color: var(--primario);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--texto);
+}
+
+input[type="text"],
+input[type="email"],
+textarea,
+select,
+input[type="date"],
+input[type="radio"],
+input[type="checkbox"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--borde);
+    border-radius: 4px;
+    background-color: #FFF;
+    font-size: 16px;
+}
+
+textarea {
+    height: 100px;
+}
+
+select {
+    /* Estilos específicos para select */
+}
+
+input[type="date"] {
+    /* Estilos específicos para input tipo date */
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    /* Estilos específicos para radio y checkbox */
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+button:hover {
+    filter: brightness(90%);
+}
+
+/* Estilos para botones */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Estilos para botón Success */
+.btn.success {
+    background-color: var(--success);
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn.success:hover {
+    background-color: #218838;
+}
+
+/* Estilos para botón Warning */
+.btn.warning {
+    background-color: var(--warning);
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn.warning:hover {
+    background-color: #e0a800;
+}
+
+/* Estilos para botón Info */
+.btn.info {
+    background-color: var(--info);
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn.info:hover {
+    background-color: #138496;
+}
+
+/* Estilos para botón Danger */
+.btn.danger {
+    background-color: var(--danger);
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn.danger:hover {
+    background-color: #c82333;
+}
+
+/* Estilos de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: var(--secundario);
+    color: #FFF;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid var(--borde);
+    text-align: left;
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--primario);
+}
+
+/* Pie de página */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid var(--borde);
+    color: var(--enlace);
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    header, footer {
+        padding: 10px;
+    }
+
+    main {
+        padding: 0 10px;
+    }
+
+    form {
+        padding: 15px;
+    }
+
+    table, th, td {
+        font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select,
+    input[type="date"],
+    input[type="radio"],
+    input[type="checkbox"] {
+        padding: 8px;
+    }
+
+    button,
+    .btn {
+        padding: 8px 16px;
+    }
+}

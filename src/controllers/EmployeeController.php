@@ -34,7 +34,7 @@ class EmployeeController extends AbstractController
 
     public function update(): void
     {
-        $id = (int)$_REQUEST['id'];
+        $id = (int) $_REQUEST['id'];
         $employeeData = $_REQUEST['employee'] ?? null;
         $errors = $this->validate($employeeData, true);
         $employee = new EmployeeModel();
@@ -50,6 +50,7 @@ class EmployeeController extends AbstractController
     public function store()
     {
         $employeeData = $_REQUEST['employee'] ?? null;
+        
         $errors = $this->validate($employeeData);
         $employee = new EmployeeModel();
         $this->extracted($employeeData, $employee);
